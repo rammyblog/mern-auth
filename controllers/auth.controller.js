@@ -23,9 +23,9 @@ exports.login = async (req, res, next) => {
     if (!user) {
       return next(new ErrorResponse("Invalid credentials", 401));
     }
-    console.log(password);
+
     const isMatch = await user.matchPasswords(password);
-    console.log(isMatch);
+
     if (!isMatch) {
       return next(new ErrorResponse("Invalid credentials", 401));
     }
@@ -45,7 +45,7 @@ exports.forgotPassword = async (req, res, next) => {
     const resetToken = user.getResetPasswordToken();
     await user.save();
 
-    const resetURL = `${process.env.FRONTEND_URL}/password-reset/${resetToken}`;
+    const resetURL = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
     const message = `
       <h1>You have requested a password reset</h1>
       <p>Please go to this link to reset your password </p>
